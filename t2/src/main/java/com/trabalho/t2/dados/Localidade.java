@@ -1,0 +1,31 @@
+package com.trabalho.t2.dados;
+
+public class Localidade {
+    private long qtdEleitores;
+    private String cep;
+    private String nome;
+    private TipoLocalidade tipo;
+
+    public Localidade(long qtdEleitores, String cep, String nome, TipoLocalidade tipo) {
+        this.qtdEleitores = qtdEleitores;
+        this.cep = cep;
+        this.nome = nome;
+        this.tipo = tipo;
+    }
+
+    public long getQtdEleitores() {
+        return qtdEleitores;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public TipoLocalidade getTipoLocalidade() {
+        return tipo;
+    }
+}
