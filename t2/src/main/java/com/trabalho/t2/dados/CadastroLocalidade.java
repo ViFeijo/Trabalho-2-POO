@@ -12,8 +12,20 @@ public class CadastroLocalidade {
     }
 
     public String cadastrarLocalidade(String qtdEleitores, String cep, String nome, String tipo) {
-        try {
+        String dadosValidos = validadorDados(qtdEleitores, cep, nome, tipo);
+        if (dadosValidos != null)
+            return dadosValidos;
 
+        TipoLocalidade t = TipoLocalidade.valueOf(tipo.toUpperCase());
+        long qtdEleitoresLong = Long.parseLong(qtdEleitores);
+
+        Localidade novoLocalidade = new Localidade(qtdEleitoresLong, cep, nome, t);
+        localidades.add(novoLocalidade);
+        return "Localidade criada com sucesso.";
+    }
+
+    private String validadorDados(String qtdEleitores, String cep, String nome, String tipo) {
+        try {
             if (nome == null || nome.trim().length() == 0)
                 throw new IllegalArgumentException("Nome inválido.");
 
@@ -33,13 +45,7 @@ public class CadastroLocalidade {
                     !tipo.toUpperCase().equals("ESTADUAL") &&
                     !tipo.toUpperCase().equals("NACIONAL"))
                 throw new IllegalArgumentException("Esse tipo não está registrado no sistema.");
-
-            TipoLocalidade t = TipoLocalidade.valueOf(tipo.toUpperCase());
-            long qtdEleitoresLong = Long.parseLong(qtdEleitores);
-
-            Localidade novoLocalidade = new Localidade(qtdEleitoresLong, cep, nome, t);
-            localidades.add(novoLocalidade);
-            return "Localidade criada com sucesso.";
+            return null;
         } catch (NumberFormatException exception) {
             return qtdEleitores + " Não é um número.";
         } catch (IllegalArgumentException exception) {
